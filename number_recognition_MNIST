@@ -52,7 +52,6 @@ num_images = num_rows*num_cols
 plt.figure(figsize=(2*2*num_cols, 2*num_rows))
 for i in range(num_images):
   plt.subplot(num_rows, 2*num_cols, 2*i+1)
-  #plot_image(i, predictions[i], y_test, x_test)
   plt.imshow(x_test[i], cmap=plt.cm.binary)
   plt.xlabel("{} {:2.0f}% (true label: {})".format(np.argmax(predictions[i]),
                                           100*np.max(predictions[i]),
