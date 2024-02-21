@@ -1,0 +1,63 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Flatten, Dropout
+from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.optimizers import Adam
+
+# load data
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+# Normalize the images to [0, 1] range
+x_train = x_train.astype('float32') / 255
+x_test = x_test.astype('float32') / 255
+
+# one-hot encode the labels
+y_train = to_categorical(y_train, 10)
+y_test = to_categorical(y_test, 10)
+
+# model
+model = Sequential([
+    Flatten(input_shape=(28, 28)),  
+    Dense(128, activation='relu'),  
+    Dropout(0.2), 
+    Dense(10, activation='softmax')
+])
+
+model.compile(
+    optimizer=Adam(),
+    loss='categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+model.fit(
+    x_train, y_train,
+    epochs=10,
+    batch_size=32,
+    validation_data=(x_test, y_test)
+)
+
+# test and print accuracy
+test_loss, test_acc = model.evaluate(x_test, y_test)
+print('Test accuracy:', test_acc)
+
+# make predictions 
+predictions = model.predict(x_test)
+
+# visualize some prediction results
+num_rows = 3
+num_cols = 3
+num_images = num_rows*num_cols
+plt.figure(figsize=(2*2*num_cols, 2*num_rows))
+for i in range(num_images):
+  plt.subplot(num_rows, 2*num_cols, 2*i+1)
+  #plot_image(i, predictions[i], y_test, x_test)
+  plt.imshow(x_test[i], cmap=plt.cm.binary)
+  plt.xlabel("{} {:2.0f}% (true label: {})".format(np.argmax(predictions[i]),
+                                          100*np.max(predictions[i]),
+                                          np.argmax(y_test[i])),
+                                          color='blue')
+
+plt.tight_layout()
+plt.show()
