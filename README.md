@@ -1,1 +1,1 @@
-# Deep-Learning-Methods-for-Player-Detection
+# EECS 545 Jersey Number Recognition Challenge
