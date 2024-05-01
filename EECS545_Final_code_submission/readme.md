@@ -1,1 +1,2 @@
+# Overview
 EECS545_paddleOCR_code_submission.ipynb contains the code used for the multipass approach as detailed in our final report. The supplied JSON file, output_challenge.json, is the result after 5 additional passes with the settings detailed in our report. This file was submitted to EvalAI and gave a result of 75.52% accuracy. We provide it in case you would like to verify our claimed challenge accuracy.
